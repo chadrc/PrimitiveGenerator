@@ -8,9 +8,24 @@
 class Primitive
 {
 public:
-    virtual QVector3D* vertexData() = 0;
-    virtual int* indexData() = 0;
-    virtual QMatrix4x4 transform() = 0;
+    ~Primitive();
+
+    int vertexCount();
+    int indexCount();
+    const QVector3D* vertexData();
+    const int* indexData();
+    QMatrix4x4 transform();
+
+protected:
+    Primitive();
+
+    QVector<QVector3D> vertices;
+    QVector<int> indices;
+
+private:
+    QVector3D position;
+    QVector3D rotation;
+    QVector3D scale;
 };
 
 #endif // PRIMITIVE_H
