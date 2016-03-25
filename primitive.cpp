@@ -7,6 +7,11 @@ Primitive::Primitive()
     position = QVector3D(0,0,0);
 }
 
+void Primitive::addVertexPoint(float x, float y, float z)
+{
+    vertices.append(QVector3D(x,y,z));
+}
+
 Primitive::~Primitive()
 {
 

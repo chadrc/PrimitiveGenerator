@@ -32,6 +32,8 @@ protected:
     QVector<QVector3D> vertices;
     QVector<int> indices;
 
+    void addVertexPoint(float x, float y, float z);
+
 private:
     QVector3D position;
     QVector3D rotation;
