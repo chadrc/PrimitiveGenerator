@@ -8,6 +8,7 @@
 #include <QOpenGLBuffer>
 #include <QMatrix4x4>
 #include <QSize>
+#include <QResizeEvent>
 
 class Primitive;
 
@@ -25,11 +26,12 @@ public:
 signals:
 
 public slots:
+    void queueUpdate();
 
 protected:
-    void initializeGL();
-    void paintGL();
-    void resizeGL();
+    virtual void initializeGL();
+    virtual void paintGL();
+    virtual void resizeGL(int width, int height);
 
 private:
     Primitive* currentPrimitive;

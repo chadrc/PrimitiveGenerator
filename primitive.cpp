@@ -42,3 +42,43 @@ QMatrix4x4 Primitive::transform()
     m.translate(position);
     return m;
 }
+
+void Primitive::setRotation(QVector3D angles)
+{
+    rotation = angles;
+}
+
+void Primitive::rotate(QVector3D angles)
+{
+    rotation += angles;
+}
+
+void Primitive::setRotation(float x, float y, float z)
+{
+    setRotation(QVector3D(x,y,z));
+}
+
+void Primitive::rotate(float x, float y, float z)
+{
+    rotate(QVector3D(x,y,z));
+}
+
+void Primitive::setPosition(QVector3D position)
+{
+    this->position = position;
+}
+
+void Primitive::translate(QVector3D posDelta)
+{
+    this->position += posDelta;
+}
+
+void Primitive::setPosition(float x, float y, float z)
+{
+    setPosition(QVector3D(x,y,z));
+}
+
+void Primitive::translate(float x, float y, float z)
+{
+    translate(QVector3D(x,y,z));
+}

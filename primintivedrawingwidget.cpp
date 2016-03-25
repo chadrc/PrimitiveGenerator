@@ -3,12 +3,12 @@
 #include "Primitives/square.h"
 
 #include <QFile>
+#include <QTimer>
 
 PrimintiveDrawingWidget::PrimintiveDrawingWidget(QWidget *parent) :
     QOpenGLWidget(parent),
     currentPrimitive(nullptr)
 {
-
 }
 
 PrimintiveDrawingWidget::~PrimintiveDrawingWidget()
@@ -21,14 +21,21 @@ PrimintiveDrawingWidget::~PrimintiveDrawingWidget()
 
 QSize PrimintiveDrawingWidget::minimumSizeHint() const
 {
-    qDebug() << "min size hint";
+//    qDebug() << "min size hint";
     return QSize(50, 50);
 }
 
 QSize PrimintiveDrawingWidget::sizeHint() const
 {
-    qDebug() << "size hint";
-    return QSize(400, 400);
+//    qDebug() << "size hint";
+    return QSize(600, 600);
+}
+
+void PrimintiveDrawingWidget::queueUpdate()
+{
+    this->update();
+
+    QTimer::singleShot(100, Qt::PreciseTimer, this, SLOT(queueUpdate()));
 }
 
 void PrimintiveDrawingWidget::initializeGL()
@@ -63,25 +70,30 @@ void PrimintiveDrawingWidget::initializeGL()
     indexBuffer.bind();
     indexBuffer.allocate(currentPrimitive->indexData(), sizeof(int) * currentPrimitive->indexCount());
 
-    projectionMatrix.perspective(45.0f, .5f, .01f, 10.0f);
-    viewMatrix.translate(0, 0, -2);
-
-    program.setUniformValue(modelMatAttr, currentPrimitive->transform());
-    program.setUniformValue(viewProjMatAttr, projectionMatrix * viewMatrix);
+    viewMatrix.translate(0, 0, -3);
 
     vao.release();
     program.release();
 
     glClearColor(.5, .3, .7, 1);
+
+    QTimer::singleShot(100, Qt::PreciseTimer, this, SLOT(queueUpdate()));
 }
 
 void PrimintiveDrawingWidget::paintGL()
 {
+    // Update
+    currentPrimitive->rotate(0, 1, 0);
+
+    // Draw
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
 
     vao.bind();
     program.bind();
+
+    program.setUniformValue(modelMatAttr, currentPrimitive->transform());
+    program.setUniformValue(viewProjMatAttr, projectionMatrix * viewMatrix);
 
     glDrawElements(GL_TRIANGLES, currentPrimitive->indexCount(), GL_UNSIGNED_INT, 0);
 
@@ -89,8 +101,10 @@ void PrimintiveDrawingWidget::paintGL()
     program.release();
 }
 
-void PrimintiveDrawingWidget::resizeGL()
+void PrimintiveDrawingWidget::resizeGL(int width, int height)
 {
-
+    resizing = true;
+    qDebug() << "Resize GL: " << (float)width/height;
+    projectionMatrix.setToIdentity();
+    projectionMatrix.perspective(60.0f, (float)width/(float)height, .01, 10.0f);
 }
-
