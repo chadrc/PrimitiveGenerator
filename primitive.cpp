@@ -7,34 +7,19 @@ Primitive::Primitive()
     position = QVector3D(0,0,0);
 }
 
-void Primitive::addVertexPoint(float x, float y, float z)
-{
-    vertices.append(QVector3D(x,y,z));
-}
-
 Primitive::~Primitive()
 {
 
 }
 
-int Primitive::vertexCount()
+int Primitive::VertexCount()
 {
     return vertices.size();
 }
 
-int Primitive::indexCount()
-{
-    return indices.size();
-}
-
-const QVector3D *Primitive::vertexData()
+const Vertex *Primitive::VertexData()
 {
     return vertices.constData();
-}
-
-const int *Primitive::indexData()
-{
-    return indices.constData();
 }
 
 QMatrix4x4 Primitive::transform()

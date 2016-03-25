@@ -2,22 +2,24 @@
 
 Square::Square()
 {
-    vertices.append(QVector3D(-.5, -.5, 0));
-    vertices.append(QVector3D(-.5, .5, 0));
-    vertices.append(QVector3D(.5, .5, 0));
-    vertices.append(QVector3D(.5, -.5, 0));
+    QVector3D bottomLeft = QVector3D(-.5, -.5, 0);
+    QVector3D topLeft = QVector3D(-.5, .5, 0);
+    QVector3D topRight = QVector3D(.5, .5, 0);
+    QVector3D bottomRight = QVector3D(.5, -.5, 0);
 
-    indices.append(0);
-    indices.append(1);
-    indices.append(2);
+    QVector3D normal = QVector3D(0, 0, 1);
 
-    indices.append(0);
-    indices.append(2);
-    indices.append(3);
+    vertices.append(Vertex(bottomLeft, normal));
+    vertices.append(Vertex(topLeft, normal));
+    vertices.append(Vertex(topRight, normal));
+
+    vertices.append(Vertex(bottomLeft, normal));
+    vertices.append(Vertex(topRight, normal));
+    vertices.append(Vertex(bottomRight, normal));
+
 }
 
 Square::~Square()
 {
-
 }
 

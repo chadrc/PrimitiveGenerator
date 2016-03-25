@@ -5,15 +5,30 @@
 #include <QVector3D>
 #include <QMatrix4x4>
 
+class Vertex
+{
+    QVector3D position;
+    QVector3D normal;
+    QVector4D color;
+
+public:
+    Vertex()
+    {
+        color = QVector4D(1,1,1,1);
+    }
+
+    Vertex(QVector3D position, QVector3D normal, QVector4D color = QVector4D(1,1,1,1)) :
+        position(position), normal(normal), color(color)
+    {}
+};
+
 class Primitive
 {
 public:
     ~Primitive();
 
-    int vertexCount();
-    int indexCount();
-    const QVector3D* vertexData();
-    const int* indexData();
+    int VertexCount();
+    const Vertex* VertexData();
     QMatrix4x4 transform();
 
     void setRotation(QVector3D angles);
@@ -29,10 +44,7 @@ public:
 protected:
     Primitive();
 
-    QVector<QVector3D> vertices;
-    QVector<int> indices;
-
-    void addVertexPoint(float x, float y, float z);
+    QVector<Vertex> vertices;
 
 private:
     QVector3D position;

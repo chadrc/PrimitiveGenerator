@@ -46,6 +46,8 @@ private:
     int viewProjMatAttr;
     int modelMatAttr;
     int positionAttr;
+    int normalAttr;
+    int colorAttr;
 };
 
 #endif // PRIMINTIVEDRAWINGWIDGET_H

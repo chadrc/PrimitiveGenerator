@@ -57,19 +57,20 @@ void PrimintiveDrawingWidget::initializeGL()
     viewProjMatAttr = program.uniformLocation("viewProjMat");
     modelMatAttr = program.uniformLocation("modelMat");
     positionAttr = program.attributeLocation("position");
+    normalAttr = program.attributeLocation("normal");
+    colorAttr = program.attributeLocation("color");
 
     vertexBuffer = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
     vertexBuffer.create();
     vertexBuffer.bind();
-    vertexBuffer.allocate(currentPrimitive->vertexData(), sizeof(QVector3D) * currentPrimitive->vertexCount());
+    vertexBuffer.allocate(currentPrimitive->VertexData(), sizeof(Vertex) * currentPrimitive->VertexCount());
 
     program.enableAttributeArray(positionAttr);
-    program.setAttributeBuffer(positionAttr, GL_FLOAT, 0, 3);
-
-    indexBuffer = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
-    indexBuffer.create();
-    indexBuffer.bind();
-    indexBuffer.allocate(currentPrimitive->indexData(), sizeof(int) * currentPrimitive->indexCount());
+    program.enableAttributeArray(normalAttr);
+    program.enableAttributeArray(colorAttr);
+    program.setAttributeBuffer(positionAttr, GL_FLOAT, 0, 3, sizeof(Vertex));
+    program.setAttributeBuffer(normalAttr, GL_FLOAT, sizeof(QVector3D), 3, sizeof(Vertex));
+    program.setAttributeBuffer(colorAttr, GL_FLOAT, sizeof(QVector3D)*2, 4, sizeof(Vertex));
 
     viewMatrix.translate(0, 0, -3);
 
@@ -84,7 +85,7 @@ void PrimintiveDrawingWidget::initializeGL()
 void PrimintiveDrawingWidget::paintGL()
 {
     // Update
-    currentPrimitive->rotate(1, 0, 0);
+    currentPrimitive->rotate(0, 5, 0);
 
     // Draw
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -97,7 +98,8 @@ void PrimintiveDrawingWidget::paintGL()
     program.setUniformValue(modelMatAttr, currentPrimitive->transform());
     program.setUniformValue(viewProjMatAttr, projectionMatrix * viewMatrix);
 
-    glDrawElements(GL_TRIANGLES, currentPrimitive->indexCount(), GL_UNSIGNED_INT, 0);
+    glDrawArrays(GL_TRIANGLES, 0, currentPrimitive->VertexCount());
+    //glDrawElements(GL_TRIANGLES, currentPrimitive->indexCount(), GL_UNSIGNED_INT, 0);
 
     vao.release();
     program.release();
