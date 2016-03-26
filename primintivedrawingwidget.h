@@ -43,7 +43,8 @@ private:
     QMatrix4x4 viewMatrix;
     QMatrix4x4 projectionMatrix;
 
-    int viewProjMatAttr;
+    int projMatAttr;
+    int viewMatAttr;
     int modelMatAttr;
     int positionAttr;
     int normalAttr;

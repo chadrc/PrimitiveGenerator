@@ -54,7 +54,8 @@ void PrimintiveDrawingWidget::initializeGL()
     vao.bind();
     program.bind();
 
-    viewProjMatAttr = program.uniformLocation("viewProjMat");
+    viewMatAttr = program.uniformLocation("viewMat");
+    projMatAttr = program.uniformLocation("projMat");
     modelMatAttr = program.uniformLocation("modelMat");
     positionAttr = program.attributeLocation("position");
     normalAttr = program.attributeLocation("normal");
@@ -96,7 +97,8 @@ void PrimintiveDrawingWidget::paintGL()
     program.bind();
 
     program.setUniformValue(modelMatAttr, currentPrimitive->transform());
-    program.setUniformValue(viewProjMatAttr, projectionMatrix * viewMatrix);
+    program.setUniformValue(viewMatAttr, viewMatrix);
+    program.setUniformValue(projMatAttr, projectionMatrix);
 
     glDrawArrays(GL_TRIANGLES, 0, currentPrimitive->VertexCount());
     //glDrawElements(GL_TRIANGLES, currentPrimitive->indexCount(), GL_UNSIGNED_INT, 0);
