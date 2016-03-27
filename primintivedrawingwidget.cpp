@@ -78,7 +78,7 @@ void PrimintiveDrawingWidget::initializeGL()
     vao.release();
     program.release();
 
-    glClearColor(.5, .3, .7, 1);
+    glClearColor(0,0,0, 1);
 
     QTimer::singleShot(100, Qt::PreciseTimer, this, SLOT(queueUpdate()));
 }
