@@ -20,14 +20,16 @@ SOURCES += main.cpp\
     primitive.cpp \
     Primitives/square.cpp \
     mainwidget.cpp \
-    Primitives/cube.cpp
+    Primitives/cube.cpp \
+    Primitives/circle.cpp
 
 HEADERS  += mainwindow.h \
     primintivedrawingwidget.h \
     primitive.h \
     Primitives/square.h \
     mainwidget.h \
-    Primitives/cube.h
+    Primitives/cube.h \
+    Primitives/circle.h
 
 FORMS    += mainwindow.ui
 

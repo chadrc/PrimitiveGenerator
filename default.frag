@@ -11,7 +11,7 @@ vec3 ld = vec3 (.7, .7, .7);
 vec3 la = vec3 (.2, .2, .2);
 
 vec3 ks = vec3 (1.0, 1.0, 1.0);
-vec3 kd = vec3 (1.0, .5, 0.0);
+vec3 kd = vec3 (.8, .8, .8);
 vec3 ka = vec3 (1.0, 1.0, 1.0);
 
 float specExp = 1000.0;

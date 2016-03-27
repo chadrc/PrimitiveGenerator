@@ -1,7 +1,9 @@
 #include "primintivedrawingwidget.h"
+
 #include "primitive.h"
 #include "Primitives/square.h"
 #include "Primitives/cube.h"
+#include "Primitives/circle.h"
 
 #include <QFile>
 #include <QTimer>
@@ -43,7 +45,7 @@ void PrimintiveDrawingWidget::initializeGL()
 {
     initializeOpenGLFunctions();
 
-    currentPrimitive = new Cube();
+    currentPrimitive = new Circle();
 
     program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":shaders/default.vert");
     program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":shaders/default.frag");
@@ -109,7 +111,7 @@ void PrimintiveDrawingWidget::paintGL()
 
 void PrimintiveDrawingWidget::resizeGL(int width, int height)
 {
-    qDebug() << "Resize GL: " << (float)width/height;
+//    qDebug() << "Resize GL: " << (float)width/height;
     projectionMatrix.setToIdentity();
     projectionMatrix.perspective(60.0f, (float)width/(float)height, .01, 10.0f);
 }
