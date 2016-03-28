@@ -9,13 +9,15 @@
 #include <QFile>
 #include <QTimer>
 
-PrimintiveDrawingWidget::PrimintiveDrawingWidget(QWidget *parent) :
+PrimitiveDrawingWidget::PrimitiveDrawingWidget(QWidget *parent) :
     QOpenGLWidget(parent),
     currentPrimitive(nullptr)
 {
+    updating = false;
+    currentPrimitive = new Cube();
 }
 
-PrimintiveDrawingWidget::~PrimintiveDrawingWidget()
+PrimitiveDrawingWidget::~PrimitiveDrawingWidget()
 {
     if (currentPrimitive)
     {
@@ -23,30 +25,51 @@ PrimintiveDrawingWidget::~PrimintiveDrawingWidget()
     }
 }
 
-QSize PrimintiveDrawingWidget::minimumSizeHint() const
+QSize PrimitiveDrawingWidget::minimumSizeHint() const
 {
 //    qDebug() << "min size hint";
     return QSize(50, 50);
 }
 
-QSize PrimintiveDrawingWidget::sizeHint() const
+QSize PrimitiveDrawingWidget::sizeHint() const
 {
 //    qDebug() << "size hint";
     return QSize(600, 600);
 }
 
-void PrimintiveDrawingWidget::queueUpdate()
+void PrimitiveDrawingWidget::setPrimitive(Primitive *prim)
+{
+    if (prim == nullptr)
+    {
+        return;
+    }
+
+    updating = true;
+
+    if (currentPrimitive != nullptr)
+    {
+        delete currentPrimitive;
+    }
+
+    currentPrimitive = prim;
+    vertexBuffer.bind();
+    vertexBuffer.allocate(currentPrimitive->VertexData(), sizeof(Vertex) * currentPrimitive->VertexCount());
+    vertexBuffer.release();
+    updating = false;
+}
+
+void PrimitiveDrawingWidget::queueUpdate()
 {
     this->update();
 
     QTimer::singleShot(100, Qt::PreciseTimer, this, SLOT(queueUpdate()));
 }
 
-void PrimintiveDrawingWidget::initializeGL()
+void PrimitiveDrawingWidget::initializeGL()
 {
-    initializeOpenGLFunctions();
+//    qDebug() << "Initialize";
 
-    currentPrimitive = new Sphere();
+    initializeOpenGLFunctions();
 
     program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":shaders/default.vert");
     program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":shaders/default.frag");
@@ -83,12 +106,16 @@ void PrimintiveDrawingWidget::initializeGL()
 
     glClearColor(0,0,0, 1);
 
-//    currentPrimitive->setRotation(90, 0, 45);
     QTimer::singleShot(100, Qt::PreciseTimer, this, SLOT(queueUpdate()));
 }
 
-void PrimintiveDrawingWidget::paintGL()
+void PrimitiveDrawingWidget::paintGL()
 {
+    if (updating)
+    {
+        return;
+    }
+
     // Update
     currentPrimitive->rotate(0, 2, 0);
 
@@ -111,7 +138,7 @@ void PrimintiveDrawingWidget::paintGL()
     program.release();
 }
 
-void PrimintiveDrawingWidget::resizeGL(int width, int height)
+void PrimitiveDrawingWidget::resizeGL(int width, int height)
 {
 //    qDebug() << "Resize GL: " << (float)width/height;
     projectionMatrix.setToIdentity();

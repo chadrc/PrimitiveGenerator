@@ -12,16 +12,18 @@
 
 class Primitive;
 
-class PrimintiveDrawingWidget : public QOpenGLWidget, protected QOpenGLFunctions
+class PrimitiveDrawingWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
 
 public:
-    PrimintiveDrawingWidget(QWidget* parent = 0);
-    ~PrimintiveDrawingWidget();
+    PrimitiveDrawingWidget(QWidget* parent = 0);
+    ~PrimitiveDrawingWidget();
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
+
+    void setPrimitive(Primitive* prim);
 
 signals:
 
@@ -42,6 +44,8 @@ private:
     QOpenGLBuffer indexBuffer;
     QMatrix4x4 viewMatrix;
     QMatrix4x4 projectionMatrix;
+
+    bool updating;
 
     int projMatAttr;
     int viewMatAttr;

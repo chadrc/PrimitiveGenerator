@@ -5,7 +5,7 @@ Circle::Circle()
 {
     int sides = 36;
 
-    float lastx = 1;
+    float lastx = .5;
     float lasty = 0;
 
     float angleInc = 360.0/sides;
@@ -21,8 +21,8 @@ Circle::Circle()
 //        qDebug() << "Angle: " << angle;
 //        qDebug() << "LastX: " << lastx;
 //        qDebug() << "LastY: " << lasty;
-        float nextx = cos(angle);
-        float nexty = sin(angle);
+        float nextx = cos(angle) * .5;
+        float nexty = sin(angle) * .5;
 
         vertices.append(Vertex(QVector3D(0,0,0), forward));
         vertices.append(Vertex(QVector3D(lastx,lasty, 0), forward));

@@ -13,10 +13,10 @@ Sphere::Sphere()
     float angVInc = qDegreesToRadians(360.0/vDiv);
     float angH = qDegreesToRadians(90.0) - angHInc;
 
-    float topY = sin(angH);
-    float topRadius = cos(angH);
+    float topY = sin(angH) * .5;
+    float topRadius = cos(angH) * .5;
     float angV = 0;
-    QVector3D topPoint(0, 1, 0);
+    QVector3D topPoint(0, .5, 0);
     QVector3D lastPoint(cos(angV)*topRadius, topY, sin(angV)*topRadius);
 
     for (int i=0; i<vDiv; i++)
@@ -35,8 +35,8 @@ Sphere::Sphere()
     }
 
     angH -= angHInc;
-    float lowY = sin(angH);
-    float lowRadius = cos(angH);
+    float lowY = sin(angH) * .5;
+    float lowRadius = cos(angH) * .5;
 
     for (int i=0; i<mhDiv; i++)
     {
@@ -60,7 +60,7 @@ Sphere::Sphere()
             vertices.append(Vertex(lastLowPoint, normal));//, color));
             vertices.append(Vertex(nextLowPoint, normal));//, color));
 
-                // Tri 2
+            // Tri 2
             vertices.append(Vertex(lastTopPoint, normal));//, color));
             vertices.append(Vertex(nextLowPoint, normal));//, color));
             vertices.append(Vertex(nextTopPoint, normal));//, color));
@@ -72,13 +72,12 @@ Sphere::Sphere()
         topY = lowY;
         topRadius = lowRadius;
         angH -= angHInc;
-        lowY = sin(angH);
-        lowRadius = cos(angH);
+        lowY = sin(angH) * .5;
+        lowRadius = cos(angH) * .5;
         angV = 0;
     }
 
-
-    topPoint = QVector3D(0, -1, 0);
+    topPoint = QVector3D(0, -.5, 0);
     lastPoint = QVector3D(cos(angV)*topRadius, lowY, sin(angV)*topRadius);
     angV = 0;
     for (int i=0; i<vDiv; i++)
@@ -96,4 +95,3 @@ Sphere::Sphere()
         lastPoint = nextPoint;
     }
 }
-

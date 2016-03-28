@@ -16,7 +16,6 @@ Square::Square()
     vertices.append(Vertex(bottomLeft, normal));
     vertices.append(Vertex(topRight, normal));
     vertices.append(Vertex(bottomRight, normal));
-
 }
 
 Square::~Square()
