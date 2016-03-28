@@ -99,7 +99,7 @@ void PrimitiveDrawingWidget::initializeGL()
     program.setAttributeBuffer(normalAttr, GL_FLOAT, sizeof(QVector3D), 3, sizeof(Vertex));
     program.setAttributeBuffer(colorAttr, GL_FLOAT, sizeof(QVector3D)*2, 4, sizeof(Vertex));
 
-    viewMatrix.translate(0, 0, -3);
+    viewMatrix.translate(0, 0, -2);
 
     vao.release();
     program.release();
