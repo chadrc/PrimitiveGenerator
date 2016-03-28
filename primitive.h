@@ -17,7 +17,7 @@ public:
         color = QVector4D(1,1,1,1);
     }
 
-    Vertex(QVector3D position, QVector3D normal, QVector4D color = QVector4D(.5,.5,.5,1)) :
+    Vertex(QVector3D position, QVector3D normal, QVector4D color = QVector4D(1,1,1,1)) :
         position(position), normal(normal), color(color)
     {}
 };

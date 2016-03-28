@@ -2,10 +2,11 @@
 
 uniform mat4 viewMat;
 
+in vec4 fColor;
 in vec3 position_CamSpace;
 in vec3 normal_CamSpace;
 
-vec3 lightPosWorld = vec3(.6, 0, .6);
+vec3 lightPosWorld = vec3(.1, .1, 3);
 vec3 ls = vec3 (1.0, 1.0, 1.0);
 vec3 ld = vec3 (.7, .7, .7);
 vec3 la = vec3 (.2, .2, .2);
@@ -38,6 +39,6 @@ void main(void)
 
     vec3 is = ls * ks * specFactor;
 
-    fragColor = vec4(is + id + ia, 1.0);
+    fragColor = vec4(is + id + ia, 1.0) * fColor;
 }
 

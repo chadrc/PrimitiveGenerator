@@ -4,6 +4,7 @@
 #include "Primitives/square.h"
 #include "Primitives/cube.h"
 #include "Primitives/circle.h"
+#include "Primitives/sphere.h"
 
 #include <QFile>
 #include <QTimer>
@@ -45,7 +46,7 @@ void PrimintiveDrawingWidget::initializeGL()
 {
     initializeOpenGLFunctions();
 
-    currentPrimitive = new Circle();
+    currentPrimitive = new Sphere();
 
     program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":shaders/default.vert");
     program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":shaders/default.frag");
@@ -82,13 +83,14 @@ void PrimintiveDrawingWidget::initializeGL()
 
     glClearColor(0,0,0, 1);
 
+//    currentPrimitive->setRotation(90, 0, 45);
     QTimer::singleShot(100, Qt::PreciseTimer, this, SLOT(queueUpdate()));
 }
 
 void PrimintiveDrawingWidget::paintGL()
 {
     // Update
-    currentPrimitive->rotate(0, 5, 0);
+    currentPrimitive->rotate(0, 2, 0);
 
     // Draw
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

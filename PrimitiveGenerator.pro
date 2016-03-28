@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     Primitives/square.cpp \
     mainwidget.cpp \
     Primitives/cube.cpp \
-    Primitives/circle.cpp
+    Primitives/circle.cpp \
+    Primitives/sphere.cpp
 
 HEADERS  += mainwindow.h \
     primintivedrawingwidget.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     Primitives/square.h \
     mainwidget.h \
     Primitives/cube.h \
-    Primitives/circle.h
+    Primitives/circle.h \
+    Primitives/sphere.h
 
 FORMS    += mainwindow.ui
 
